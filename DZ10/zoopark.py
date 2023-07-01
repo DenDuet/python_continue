@@ -9,57 +9,68 @@
 # параметры в свойства. Задачи должны решаться через вызов методов
 # экземпляра.
 
-from animals import *
-# from animals import Cat
-# from animals import Bird
-# from animals import Fish
+import datetime
+from animals import Dog
+from animals import Cat
+from animals import Bird
+from animals import Fish
 
+class Fishs:
+    """Класс заглушка, чтобы проверить строку 39"""
+    def __init__(self):
+        self.name = self
+    def about(self):
+        return self
+    def say(self):
+        return self
 
+class Zoo:
+    def __init__(self,type_animal,*args,**kwargs):
+        self.type_animal = type_animal
+        if (type_animal==Dog):
+            self.animal = self.make_dog(**kwargs)
+        elif(type_animal==Cat):
+            self.animal = self.make_cat(**kwargs)
+        elif(type_animal==Bird):
+            self.animal = self.make_bird(**kwargs)
+        elif(type_animal==Fish):
+            self.animal = self.make_fish(**kwargs)
+        else:
+            print("Неправильно указан тип животного") 
+            exit(0)          
 
-class Zoo(Dog,Cat,Bird,Fish):
+    def about(self):
+        about = f"Привет! Меня зовут {self.name}. У меня {self.num_legs} ног(и). Мне {datetime.today().year-self.birthday} года(год)."
+   
+        if self.tail == "Хвост":
+            about = about + " У меня есть хвост."
+        else:
+            about = about + " У меня хвоста нет."
+        about = about + f" Я умею говорить {self.say()}"
+        return about
+
+    def make_dog(self,name,num_legs,birth_year,tail,say):
+        return Dog(name,num_legs,birth_year,tail,say)         
     
-    # def __init__(self,type,name,num_legs,birth_year,tail=None,say=None,wool=None,wings=None,fin=None):
-    def __init__(self, type, *args, **kwargs):
-        if (type==Dog):
-            Dog.__init__(self,*args,**kwargs)
-        elif(type==Cat):
-            Cat.__init__(self,*args,**kwargs)
-        elif(type==Bird):
-            Bird.__init__(self,*args,**kwargs)
-        elif(type==Fish):
-            Fish.__init__(self,*args,**kwargs)
-        # else:
-        #     print("Неправильно указан тип животного")        
-
-        # if (type==Dog):
-        #     Dog.__init__(name,num_legs,birth_year,tail,say)
-        # elif(type==Cat):
-        #     Cat.__init__(name,num_legs,birth_year,tail,wool,say)
-        # elif(type==Bird):
-        #     Bird.__init__(name,num_legs,birth_year,wings,say)
-        # elif(type==Fish):
-        #     Fish.__init__(name,num_legs,birth_year,fin,tail,say)
-        # else:
-        #     print("Неправильно указан тип животного")        
-       
+    def make_cat(self,name,num_legs,birth_year,tail,wool,say):
+        return Cat(name,num_legs,birth_year,tail,wool,say)     
+    
+    def make_bird(self,name,num_legs,birth_year,wings,say):
+        return Bird(name,num_legs,birth_year,wings,say)
+    
+    def make_fish(self,name,num_legs,birth_year,fin,tail,say):
+        return Fish(name,num_legs,birth_year,fin,tail,say)
+      
         
-# zoo1 = Zoo(Dog,"Лабрадор",4,2010,"Хвост","Гав-гав")
+zoo1 = Zoo(type_animal=Dog,name="Лабрадор",num_legs=4,birth_year=2010,tail="Хвост",say="Гав-гав")
+print(zoo1.animal.about(), zoo1.animal.say())
+zoo2 = Zoo(type_animal=Cat,name="Мурка",num_legs=4,birth_year=2022,tail="Нет хвоста",wool="Шерсть",say="Мяу")
+print(zoo2.animal.about(), zoo2.animal.say())
+zoo3 = Zoo(type_animal=Bird,name="Чиж",num_legs=2,birth_year=2011, wings="Крылья", say="Жжжжик")
+print(zoo3.animal.about(), zoo3.animal.say())
+zoo4 = Zoo(type_animal=Fish,name="Щука",num_legs=0,birth_year=2022, fin="Плавники", tail="Хвост", say="но меня никто не слышит...")
+print(zoo4.animal.about(), zoo4.animal.say())
+# Это строки для проверки отработки неправильного класса
+zoo5 = Zoo(type_animal=Fishs,name="Щука",num_legs=0,birth_year=2022, fin="Плавники", tail="Хвост", say="но меня никто не слышит...")
+print(zoo5.animal.about(), zoo5.animal.say())
 
-# с2 = Dog("Такса",4,1999,"Нет хвоста","Гав-гав-гав")
-zoo2 = Zoo(type=Cat,name="Мурка",num_legs=4,birth_year=2022,tail="Нет хвоста",wool="Шерсть",say="Мяу")
-# print(с2.about())
-# print(zoo1.about(), zoo1)
-print(zoo2.about(), zoo2)
-# 
-
-# zoo3 = Zoo("Bird",2,1998, "Крылья", "Чирик-Чирик")
-# print(zoo3.about(), zoo3)
-# с2 = Birdth("Чиж",2,2011, "Крылья", "Жжжжик")
-# с1 = Birdth("Сорока",2,2021, "Крылья", "Чик-Чик")
-# print(" ", с.about(), "\n ", с1.about(), "\n ", с2.about(), с2.say())
-
-# zoo4 = Zoo("Fish",0,2018, "Нет плавников", "Хвост", "но меня никто не слышит...")
-# print(zoo4.about(), zoo4)
-# с1 = Fish("Карась",0,2021, "Плавники", "Хвост", "но меня никто не слышит...")
-# с2 = Fish("Щука",0,2022, "Плавники", "Хвост", "но меня никто не слышит...")
-# print(" ", с.about(), "\n ", с1.about(), "\n ", с2.about(), с2.say())
